@@ -5,7 +5,7 @@ const fetch = require("node-fetch"); // Assuming you're using Node.js
 const serviceAccount = require("C:\\Users\\camdi\\OneDrive\\Desktop\\March ap\\march-e499a-firebase-adminsdk-dusr9-397a56b1ba.json"); // Replace with the path to your service account key file
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://march-e499a-default-rtdb.firebaseio.com/"// Replace with your Firebase project's database URL
+  databaseURL: "DATABASE URL"// Replace with your Firebase project's database URL
 });
 
 // Function to fetch data from your API and write it to Firebase Realtime Database
