@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>March Madness Pool Standings</title>
+        <style>
+            table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+            th, td {
+                border: 1px solid #ddd;
+                padding: 8px;
+                text-align: left;
+            }
+            th {
+                background-color: #f2f2f2;
+            }
+        </style>
+    </head>
+<body>
+    <h1>March Madness Pool Standings</h1>
+    <h1>Updated: 3/31/2024 4:42PM</h1>
+    <table id="standings">
+        <thead>
+            <tr>
+                <th>Rank</th>
+                <th>Name</th>
+                <th>Total Score</th>
+                <th>Max Score</th>
+                <th>First 4 Score</th>
+                <th>Round 64 Score</th>
+                <th>Round 32 Score</th>
+                <th>Sweet 16 Score</th>
+                <th>Elite 8 Score</th>
+                <th>Final 4 Score</th>
+                <th>Championship Score</th>
+            </tr>
+        </thead>
+        <tbody id="standings-body">
+            <!-- Data will be dynamically inserted here -->
+        </tbody>
+    </table>
+
+    <!-- Include Firebase SDK using CommonJS syntax -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+    <script>
+        // Initialize Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyCb6185SL8sryTCYU0sOItD8trPd1fHqZ0",
+            authDomain: "march-e499a.firebaseapp.com",
+            databaseURL: "https://march-e499a-default-rtdb.firebaseio.com",
+            projectId: "march-e499a",
+            storageBucket: "march-e499a.appspot.com",
+            messagingSenderId: "1013994745777",
+            appId: "1:1013994745777:web:9280690f6f6d78229e1790",
+            measurementId: "G-RS597V8DEV"
+        };
+        firebase.initializeApp(firebaseConfig);
+
+        // Get a reference to the database service
+        const database = firebase.database();
+
+        // Fetch data from Firebase Realtime Database
+         // Fetch data from Firebase Realtime Database
+         const standingsRef = database.ref('standings');
+        standingsRef.once('value', (snapshot) => {
+            const standingsData = snapshot.val();
+            const standingsBody = document.getElementById('standings-body');
+            Object.values(standingsData).forEach(player => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${player.rank}</td>
+                    <td>${player.name}</td>
+                    <td>${player.total_score}</td>
+                    <td>${player.max_score}</td>
+                    <td>${player.first4_score}</td>
+                    <td>${player.round64_score}</td>
+                    <td>${player.round32_score}</td>
+                    <td>${player.sweet16_score}</td>
+                    <td>${player.elite8_score}</td>
+                    <td>${player.final4_score}</td>
+                    <td>${player.championship_score}</td>
+                `;
+                standingsBody.appendChild(row);
+            });
+        });
+    </script>
+</body>
+</html>
